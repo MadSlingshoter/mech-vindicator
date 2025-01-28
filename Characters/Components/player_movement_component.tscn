@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c07eoa7g2smp"]
+
+[ext_resource type="Script" path="res://Characters/Components/player_movement_component.gd" id="1_v07op"]
+
+[node name="PlayerMovementComponent" type="Node"]
+script = ExtResource("1_v07op")

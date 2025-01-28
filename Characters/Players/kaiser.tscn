@@ -1,0 +1,121 @@
+[gd_scene load_steps=18 format=3 uid="uid://cwgfn0g6gtkog"]
+
+[ext_resource type="Texture2D" uid="uid://bq8nvhn3fuanm" path="res://Art/Players/Kaiser Bottom.png" id="1_o7bxt"]
+[ext_resource type="Script" path="res://Characters/Players/player.gd" id="1_xcf68"]
+[ext_resource type="Texture2D" uid="uid://kbhpn1qsuup7" path="res://Art/Players/Kaiser Top.png" id="2_mtpya"]
+[ext_resource type="PackedScene" uid="uid://c07eoa7g2smp" path="res://Characters/Components/player_movement_component.tscn" id="4_hg17u"]
+[ext_resource type="PackedScene" uid="uid://b3y77qe4ncwjg" path="res://Characters/Components/health_component.tscn" id="5_1tw0x"]
+[ext_resource type="PackedScene" uid="uid://c0vf83crlngo" path="res://Characters/Components/player_shooting_component.tscn" id="6_72g8a"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ppluu"]
+radius = 17.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jc0co"]
+atlas = ExtResource("1_o7bxt")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwqgv"]
+atlas = ExtResource("1_o7bxt")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_afpl5"]
+atlas = ExtResource("1_o7bxt")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4aw2x"]
+atlas = ExtResource("1_o7bxt")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k3tii"]
+atlas = ExtResource("1_o7bxt")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1hknn"]
+atlas = ExtResource("1_o7bxt")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ms6r5"]
+atlas = ExtResource("1_o7bxt")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tsmxl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jc0co")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwqgv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_afpl5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4aw2x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k3tii")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1hknn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ms6r5")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_so7rs"]
+atlas = ExtResource("2_mtpya")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jcmui"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_so7rs")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Kaiser" type="CharacterBody2D" node_paths=PackedStringArray("animations_bottom", "animations_top", "player_movement_component", "player_shooting_component", "health_component")]
+collision_layer = 16
+motion_mode = 1
+script = ExtResource("1_xcf68")
+animations_bottom = NodePath("AnimationsBottom")
+animations_top = NodePath("AnimationsTop")
+player_movement_component = NodePath("PlayerMovementComponent")
+player_shooting_component = NodePath("PlayerShootingComponent")
+health_component = NodePath("HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ppluu")
+
+[node name="AnimationsBottom" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tsmxl")
+animation = &"walk"
+autoplay = "idle"
+
+[node name="AnimationsTop" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jcmui")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="PlayerMovementComponent" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_hg17u")]
+base_speed = 300.0
+player = NodePath("..")
+
+[node name="HealthComponent" parent="." instance=ExtResource("5_1tw0x")]
+max_health = 100
+
+[node name="PlayerShootingComponent" parent="." node_paths=PackedStringArray("player") instance=ExtResource("6_72g8a")]
+player = NodePath("..")
