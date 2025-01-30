@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cwgfn0g6gtkog"]
+[gd_scene load_steps=20 format=3 uid="uid://cwgfn0g6gtkog"]
 
 [ext_resource type="Texture2D" uid="uid://bq8nvhn3fuanm" path="res://Art/Players/Kaiser Bottom.png" id="1_o7bxt"]
 [ext_resource type="Script" path="res://Characters/Players/player.gd" id="1_xcf68"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c07eoa7g2smp" path="res://Characters/Components/player_movement_component.tscn" id="4_hg17u"]
 [ext_resource type="PackedScene" uid="uid://b3y77qe4ncwjg" path="res://Characters/Components/health_component.tscn" id="5_1tw0x"]
 [ext_resource type="PackedScene" uid="uid://c0vf83crlngo" path="res://Characters/Components/player_shooting_component.tscn" id="6_72g8a"]
+[ext_resource type="PackedScene" uid="uid://cp4fop00y7op" path="res://Characters/Components/hurt_box_component.tscn" id="7_1nddt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ppluu"]
 radius = 17.0
@@ -87,15 +88,24 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Kaiser" type="CharacterBody2D" node_paths=PackedStringArray("animations_bottom", "animations_top", "player_movement_component", "player_shooting_component", "health_component")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_uy5vi"]
+radius = 17.0
+
+[node name="Kaiser" type="CharacterBody2D" node_paths=PackedStringArray("animations_bottom", "animations_top", "player_movement_component", "player_shooting_component", "health_component", "hurt_box_component")]
 collision_layer = 16
-motion_mode = 1
+wall_min_slide_angle = 0.0174533
+floor_constant_speed = true
+floor_block_on_wall = false
+platform_on_leave = 2
+platform_floor_layers = 4278190082
+platform_wall_layers = 2
 script = ExtResource("1_xcf68")
 animations_bottom = NodePath("AnimationsBottom")
 animations_top = NodePath("AnimationsTop")
 player_movement_component = NodePath("PlayerMovementComponent")
 player_shooting_component = NodePath("PlayerShootingComponent")
 health_component = NodePath("HealthComponent")
+hurt_box_component = NodePath("HurtBoxComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ppluu")
@@ -119,3 +129,9 @@ max_health = 100
 
 [node name="PlayerShootingComponent" parent="." node_paths=PackedStringArray("player") instance=ExtResource("6_72g8a")]
 player = NodePath("..")
+
+[node name="HurtBoxComponent" parent="." instance=ExtResource("7_1nddt")]
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
+shape = SubResource("CircleShape2D_uy5vi")

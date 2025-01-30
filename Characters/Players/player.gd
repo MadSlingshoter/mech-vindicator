@@ -15,8 +15,8 @@ class_name Player
 @export var player_shooting_component: PlayerShootingComponent
 ## Component that handles health.
 @export var health_component: HealthComponent
-
-# HurtBox component
+## Component for the player's hurtbox
+@export var hurt_box_component: HurtBoxComponent
 
 
 func _physics_process(delta: float) -> void:
