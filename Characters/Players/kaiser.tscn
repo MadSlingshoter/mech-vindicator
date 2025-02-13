@@ -1,12 +1,14 @@
-[gd_scene load_steps=20 format=3 uid="uid://cwgfn0g6gtkog"]
+[gd_scene load_steps=22 format=3 uid="uid://cwgfn0g6gtkog"]
 
 [ext_resource type="Texture2D" uid="uid://bq8nvhn3fuanm" path="res://Art/Players/Kaiser Bottom.png" id="1_o7bxt"]
 [ext_resource type="Script" path="res://Characters/Players/player.gd" id="1_xcf68"]
 [ext_resource type="Texture2D" uid="uid://kbhpn1qsuup7" path="res://Art/Players/Kaiser Top.png" id="2_mtpya"]
-[ext_resource type="PackedScene" uid="uid://c07eoa7g2smp" path="res://Characters/Components/player_movement_component.tscn" id="4_hg17u"]
+[ext_resource type="PackedScene" uid="uid://c07eoa7g2smp" path="res://Characters/Players/PlayerMovement/player_movement_component.tscn" id="4_hg17u"]
 [ext_resource type="PackedScene" uid="uid://b3y77qe4ncwjg" path="res://Characters/Components/health_component.tscn" id="5_1tw0x"]
-[ext_resource type="PackedScene" uid="uid://c0vf83crlngo" path="res://Characters/Components/player_shooting_component.tscn" id="6_72g8a"]
+[ext_resource type="PackedScene" uid="uid://c0vf83crlngo" path="res://Characters/Players/PlayerArmaments/player_shooting_component.tscn" id="6_72g8a"]
 [ext_resource type="PackedScene" uid="uid://cp4fop00y7op" path="res://Characters/Components/hurt_box_component.tscn" id="7_1nddt"]
+[ext_resource type="PackedScene" uid="uid://cmti5jnp3jufn" path="res://Characters/Players/PlayerArmaments/primary_armament_component.tscn" id="7_rxjde"]
+[ext_resource type="PackedScene" uid="uid://bjldlvvg88jdi" path="res://Characters/Players/PlayerArmaments/kaiser_primary_projectile.tscn" id="8_2wxti"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ppluu"]
 radius = 17.0
@@ -120,6 +122,9 @@ sprite_frames = SubResource("SpriteFrames_jcmui")
 animation = &"idle"
 autoplay = "idle"
 
+[node name="PrimaryOriginPoint" type="Node2D" parent="AnimationsTop"]
+position = Vector2(14, 0)
+
 [node name="PlayerMovementComponent" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_hg17u")]
 base_speed = 300.0
 player = NodePath("..")
@@ -127,8 +132,16 @@ player = NodePath("..")
 [node name="HealthComponent" parent="." instance=ExtResource("5_1tw0x")]
 max_health = 100
 
-[node name="PlayerShootingComponent" parent="." node_paths=PackedStringArray("player") instance=ExtResource("6_72g8a")]
+[node name="PlayerShootingComponent" parent="." node_paths=PackedStringArray("player", "primary_origin_point", "primary_armament_component") instance=ExtResource("6_72g8a")]
 player = NodePath("..")
+primary_origin_point = NodePath("../AnimationsTop/PrimaryOriginPoint")
+primary_armament_component = NodePath("PrimaryArmamentComponent")
+
+[node name="PrimaryArmamentComponent" parent="PlayerShootingComponent" node_paths=PackedStringArray("player") instance=ExtResource("7_rxjde")]
+damage = 10
+rate_of_fire = 0.3
+projectile = ExtResource("8_2wxti")
+player = NodePath("../..")
 
 [node name="HurtBoxComponent" parent="." instance=ExtResource("7_1nddt")]
 collision_layer = 16

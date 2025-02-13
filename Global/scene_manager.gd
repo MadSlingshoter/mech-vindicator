@@ -26,9 +26,9 @@ func _ready():
 	randomize()
 
 ## Changes the scene
-func load_new_scene(scene_name : SceneName) -> void:
+func load_new_scene(new_scene_name : SceneName) -> void:
 	var path
-	match scene_name:
+	match new_scene_name:
 		SceneName.MAIN_MENU:
 			path = "res://Menus/main_menu.tscn"
 		SceneName.TEST_STAGE:

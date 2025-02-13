@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmti5jnp3jufn"]
+
+[ext_resource type="Script" path="res://Characters/Players/PlayerArmaments/primary_armament_component.gd" id="1_q6a4y"]
+
+[node name="PrimaryArmamentComponent" type="Node"]
+script = ExtResource("1_q6a4y")
+
+[node name="ShotTimer" type="Timer" parent="."]
+process_callback = 0
+one_shot = true
