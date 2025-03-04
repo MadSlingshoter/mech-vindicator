@@ -2,7 +2,7 @@ extends Node
 class_name PlayerMovementComponent
 ## Component that handles the player's movement.
 ##
-## This component controls the player's movement and it's bottom part. 
+## This component controls the player's movement and it's animations. 
 
 ## The base speed of the player.
 @export var base_speed: float
@@ -19,7 +19,7 @@ func player_movement() -> void:
 	
 	# If no input, then stay idle. Else, walk.
 	if direction.x == 0.0 and direction.y == 0.0:
-		player.animations_bottom.play("idle")
+		player.animations_move.play("idle")
 		player.velocity = Vector2(0.0, 0.0)
 		is_moving = false
 	else:
@@ -31,6 +31,6 @@ func player_movement() -> void:
 ## The player walks in the given direction. The bottom turns to face the 
 ## walking direction.
 func walk(direction: Vector2) -> void:
-	player.animations_bottom.play("walk")
-	player.animations_bottom.rotation = direction.angle()
+	player.animations_move.play("walk")
+	player.animations_move.rotation = direction.angle()
 	player.velocity = direction * base_speed

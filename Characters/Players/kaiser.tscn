@@ -93,7 +93,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_uy5vi"]
 radius = 17.0
 
-[node name="Kaiser" type="CharacterBody2D" node_paths=PackedStringArray("animations_bottom", "animations_top", "player_movement_component", "player_shooting_component", "health_component", "hurt_box_component")]
+[node name="Kaiser" type="CharacterBody2D" node_paths=PackedStringArray("animations_move", "animations_shoot", "player_movement_component", "player_shooting_component", "health_component", "hurt_box_component")]
 collision_layer = 16
 wall_min_slide_angle = 0.0174533
 floor_constant_speed = true
@@ -102,8 +102,8 @@ platform_on_leave = 2
 platform_floor_layers = 4278190082
 platform_wall_layers = 2
 script = ExtResource("1_xcf68")
-animations_bottom = NodePath("AnimationsBottom")
-animations_top = NodePath("AnimationsTop")
+animations_move = NodePath("AnimationsMove")
+animations_shoot = NodePath("AnimationsShoot")
 player_movement_component = NodePath("PlayerMovementComponent")
 player_shooting_component = NodePath("PlayerShootingComponent")
 health_component = NodePath("HealthComponent")
@@ -112,17 +112,17 @@ hurt_box_component = NodePath("HurtBoxComponent")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ppluu")
 
-[node name="AnimationsBottom" type="AnimatedSprite2D" parent="."]
+[node name="AnimationsMove" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_tsmxl")
 animation = &"walk"
 autoplay = "idle"
 
-[node name="AnimationsTop" type="AnimatedSprite2D" parent="."]
+[node name="AnimationsShoot" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_jcmui")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="PrimaryOriginPoint" type="Node2D" parent="AnimationsTop"]
+[node name="PrimaryOriginPoint" type="Node2D" parent="AnimationsShoot"]
 position = Vector2(14, 0)
 
 [node name="PlayerMovementComponent" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_hg17u")]
@@ -130,11 +130,11 @@ base_speed = 300.0
 player = NodePath("..")
 
 [node name="HealthComponent" parent="." instance=ExtResource("5_1tw0x")]
-max_health = 100
+max_health = 30
 
 [node name="PlayerShootingComponent" parent="." node_paths=PackedStringArray("player", "primary_origin_point", "primary_armament_component") instance=ExtResource("6_72g8a")]
 player = NodePath("..")
-primary_origin_point = NodePath("../AnimationsTop/PrimaryOriginPoint")
+primary_origin_point = NodePath("../AnimationsShoot/PrimaryOriginPoint")
 primary_armament_component = NodePath("PrimaryArmamentComponent")
 
 [node name="PrimaryArmamentComponent" parent="PlayerShootingComponent" node_paths=PackedStringArray("player") instance=ExtResource("7_rxjde")]
@@ -143,8 +143,9 @@ rate_of_fire = 0.3
 projectile = ExtResource("8_2wxti")
 player = NodePath("../..")
 
-[node name="HurtBoxComponent" parent="." instance=ExtResource("7_1nddt")]
+[node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("7_1nddt")]
 collision_layer = 16
+health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
 shape = SubResource("CircleShape2D_uy5vi")

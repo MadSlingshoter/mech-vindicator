@@ -1,8 +1,7 @@
 extends Area2D
-## The primary armament projectile for the Kaiser player mech.
+## The projectile for the Grunt enemy.
 ##
-## A beam rifle shot that travels in a straight line and damages the first 
-## enemy hit.
+## Beam rifle shot that travels in a straight line. Is removed on hit.
 
 ## The projectile's speed.
 var speed: float = 500.0
@@ -30,8 +29,9 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	if active:
 		queue_free()
 
+
 func _on_area_entered(area: Area2D) -> void:
-	# Damage enemy
+	# Damage player
 	if area is HurtBoxComponent:
 		var attack = Attack.new()
 		attack.damage = damage

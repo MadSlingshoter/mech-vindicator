@@ -1,0 +1,150 @@
+[gd_scene load_steps=22 format=3 uid="uid://dh14vih4hxwoi"]
+
+[ext_resource type="Script" path="res://Characters/Enemies/enemy.gd" id="1_e3y43"]
+[ext_resource type="Script" path="res://Characters/Components/health_component.gd" id="2_joe5i"]
+[ext_resource type="Texture2D" uid="uid://b7vwd3lbgkk4u" path="res://Art/Enemies/Grunt.png" id="2_w7jl5"]
+[ext_resource type="Script" path="res://Characters/Components/hurt_box_component.gd" id="3_cmnms"]
+[ext_resource type="PackedScene" uid="uid://cp780488qd1a7" path="res://Characters/Enemies/EnemyStates/enemy_state_manager.tscn" id="5_yrbfe"]
+[ext_resource type="PackedScene" uid="uid://degfykh6f2tms" path="res://Characters/Enemies/EnemyWeapons/enemy_weapon_component.tscn" id="6_2sihk"]
+[ext_resource type="PackedScene" uid="uid://dcemt3075l67p" path="res://Characters/Enemies/EnemyStates/move_toward_player_state.tscn" id="6_5yyw5"]
+[ext_resource type="PackedScene" uid="uid://cdprudk56cog5" path="res://Characters/Enemies/EnemyStates/stationary_state.tscn" id="7_xc0kb"]
+[ext_resource type="PackedScene" uid="uid://dwbnj3jwhjedf" path="res://Characters/Enemies/EnemyWeapons/enemy_shooting_component.tscn" id="8_pby14"]
+[ext_resource type="PackedScene" uid="uid://c3o7uc3p8gu3u" path="res://Characters/Enemies/EnemyWeapons/grunt_projectile.tscn" id="10_6tncv"]
+[ext_resource type="PackedScene" uid="uid://d2ln8tt1atcuw" path="res://Characters/Components/contact_hit_box_component.tscn" id="11_og68r"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hug0i"]
+radius = 7.07107
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c8cfh"]
+atlas = ExtResource("2_w7jl5")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_teyrj"]
+atlas = ExtResource("2_w7jl5")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bbavu"]
+atlas = ExtResource("2_w7jl5")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8oix"]
+atlas = ExtResource("2_w7jl5")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7nipr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c8cfh")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_teyrj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bbavu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d8oix")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bbavu")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_evtx1"]
+atlas = ExtResource("2_w7jl5")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x4c8l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_evtx1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1iptq"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yo46u"]
+radius = 7.0
+
+[node name="Grunt" type="CharacterBody2D" node_paths=PackedStringArray("animations_move", "animations_shoot", "health_component", "hurt_box_component", "enemy_state_manager", "enemy_shooting_component")]
+collision_layer = 256
+collision_mask = 257
+script = ExtResource("1_e3y43")
+animations_move = NodePath("AnimationsMove")
+animations_shoot = NodePath("AnimationsShoot")
+health_component = NodePath("HealthComponent")
+hurt_box_component = NodePath("HurtBoxComponent")
+enemy_state_manager = NodePath("EnemyStateManager")
+enemy_shooting_component = NodePath("EnemyShootingComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_hug0i")
+
+[node name="AnimationsMove" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7nipr")
+animation = &"idle"
+
+[node name="AnimationsShoot" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_x4c8l")
+animation = &"idle"
+
+[node name="ShootOriginPoint1" type="Node2D" parent="AnimationsShoot"]
+position = Vector2(7, 3)
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_joe5i")
+max_health = 20
+
+[node name="HurtBoxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
+collision_layer = 256
+collision_mask = 0
+script = ExtResource("3_cmnms")
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
+shape = SubResource("CircleShape2D_1iptq")
+
+[node name="EnemyStateManager" parent="." node_paths=PackedStringArray("starting_state") instance=ExtResource("5_yrbfe")]
+starting_state = NodePath("MoveTowardPlayerState")
+
+[node name="MoveTowardPlayerState" parent="EnemyStateManager" node_paths=PackedStringArray("after_move_state") instance=ExtResource("6_5yyw5")]
+min_length_to_player = 150.0
+after_move_state = NodePath("../StationaryState")
+animation_move_name = "walk"
+
+[node name="StationaryState" parent="EnemyStateManager" node_paths=PackedStringArray("after_stationary_state") instance=ExtResource("7_xc0kb")]
+max_length_to_player = 300.0
+after_stationary_state = NodePath("../MoveTowardPlayerState")
+can_shoot1 = true
+
+[node name="EnemyShootingComponent" parent="." node_paths=PackedStringArray("enemy", "origin_point1", "enemy_weapon_component1") instance=ExtResource("8_pby14")]
+enemy = NodePath("..")
+origin_point1 = NodePath("../AnimationsShoot/ShootOriginPoint1")
+enemy_weapon_component1 = NodePath("GruntWeapon")
+
+[node name="GruntWeapon" parent="EnemyShootingComponent" node_paths=PackedStringArray("enemy") instance=ExtResource("6_2sihk")]
+damage = 5
+rate_of_fire = 1.5
+projectile = ExtResource("10_6tncv")
+enemy = NodePath("../..")
+
+[node name="ContactHitBoxComponent" parent="." node_paths=PackedStringArray("collision_shape") instance=ExtResource("11_og68r")]
+collision_shape = NodePath("CollisionShape2D")
+damage = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactHitBoxComponent"]
+shape = SubResource("CircleShape2D_yo46u")
