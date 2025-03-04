@@ -27,8 +27,8 @@ var can_interact : bool = true
 func _ready() -> void:
 	curr_health = max_health
 
-## Called to apply damage to the unit. The bool return is mainly used for 
-## attacks that are destroyed only if the enemy is not killed.
+## Called to apply damage to the unit.
+## Returns true if damage has been done.
 func damage(value) -> bool:
 	# Take no damage during wave transitions and cutscenes.
 	if can_interact:

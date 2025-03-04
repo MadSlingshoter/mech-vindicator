@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdprudk56cog5"]
+
+[ext_resource type="Script" path="res://Characters/Enemies/EnemyStates/stationary_state.gd" id="1_blgnw"]
+
+[node name="StationaryState" type="Node"]
+script = ExtResource("1_blgnw")
+speed = 0.0

@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2ln8tt1atcuw"]
+
+[ext_resource type="Script" path="res://Characters/Components/contact_hit_box_component.gd" id="1_pie3d"]
+
+[node name="ContactHitBoxComponent" type="Area2D"]
+collision_layer = 512
+collision_mask = 16
+script = ExtResource("1_pie3d")
+
+[node name="DeactiveTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.5
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="DeactiveTimer" to="." method="_on_deactive_timer_timeout"]

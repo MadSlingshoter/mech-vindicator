@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwbnj3jwhjedf"]
+
+[ext_resource type="Script" path="res://Characters/Enemies/EnemyWeapons/enemy_shooting_component.gd" id="1_xwfqw"]
+
+[node name="EnemyShootingComponent" type="Node"]
+script = ExtResource("1_xwfqw")
