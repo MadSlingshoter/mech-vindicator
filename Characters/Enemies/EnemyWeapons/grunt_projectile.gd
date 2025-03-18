@@ -4,7 +4,7 @@ extends Area2D
 ## Beam rifle shot that travels in a straight line. Is removed on hit.
 
 ## The projectile's speed.
-var speed: float = 500.0
+var speed: float = 300.0
 ## The projectile's damage.
 var damage: int = 10
 ## The projectile's travel direction.

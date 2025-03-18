@@ -3,15 +3,15 @@
 [ext_resource type="Script" path="res://Characters/Enemies/EnemyWeapons/grunt_projectile.gd" id="1_3iiva"]
 [ext_resource type="Texture2D" uid="uid://bjf5rwo4jket5" path="res://Art/Enemies/Grunt Projectile.png" id="1_tdlvo"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sbb56"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_oukqy"]
 atlas = ExtResource("1_tdlvo")
-region = Rect2(0, 0, 6, 3)
+region = Rect2(0, 0, 10, 8)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3a10m"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_sbb56")
+"texture": SubResource("AtlasTexture_oukqy")
 }],
 "loop": true,
 "name": &"default",
@@ -19,12 +19,12 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_isqle"]
-radius = 2.0
-height = 6.0
+radius = 4.0
+height = 10.0
 
 [node name="GruntProjectile" type="Area2D"]
 collision_layer = 512
-collision_mask = 16
+collision_mask = 80
 script = ExtResource("1_3iiva")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -35,7 +35,8 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_isqle")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-scale = Vector2(0.3, 0.2)
+position = Vector2(5.96046e-08, -5.96046e-08)
+scale = Vector2(0.5, 0.4)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
