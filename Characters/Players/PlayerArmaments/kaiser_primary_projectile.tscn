@@ -3,22 +3,22 @@
 [ext_resource type="Script" path="res://Characters/Players/PlayerArmaments/kaiser_primary_projectile.gd" id="1_8hh25"]
 [ext_resource type="Texture2D" uid="uid://cf0rg7v3eeod1" path="res://Art/Players/Kaiser Primary.png" id="1_747fn"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vsbie"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ct3m8"]
 atlas = ExtResource("1_747fn")
-region = Rect2(0, 0, 8, 8)
+region = Rect2(0, 0, 10, 8)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lgkxb"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vpa4o"]
 atlas = ExtResource("1_747fn")
-region = Rect2(0, 8, 8, 8)
+region = Rect2(10, 0, 10, 8)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2ic4r"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vsbie")
+"texture": SubResource("AtlasTexture_ct3m8")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_lgkxb")
+"texture": SubResource("AtlasTexture_vpa4o")
 }],
 "loop": true,
 "name": &"default",
@@ -26,8 +26,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4b84y"]
-radius = 2.0
-height = 8.0
+radius = 4.0
+height = 10.0
 
 [node name="KaiserPrimaryProjectile" type="Area2D"]
 collision_layer = 32
@@ -43,8 +43,8 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_4b84y")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(2.38419e-07, 0)
-scale = Vector2(0.4, 0.2)
+position = Vector2(5.96046e-08, 2.98023e-07)
+scale = Vector2(0.5, 0.4)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

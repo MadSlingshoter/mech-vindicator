@@ -13,29 +13,29 @@
 [ext_resource type="PackedScene" uid="uid://d2ln8tt1atcuw" path="res://Characters/Components/contact_hit_box_component.tscn" id="11_og68r"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hug0i"]
-radius = 7.07107
+radius = 9.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_c8cfh"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3sqpa"]
 atlas = ExtResource("2_w7jl5")
-region = Rect2(16, 0, 16, 16)
+region = Rect2(24, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_teyrj"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vai05"]
 atlas = ExtResource("2_w7jl5")
-region = Rect2(32, 0, 16, 16)
+region = Rect2(48, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bbavu"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_i2kn3"]
 atlas = ExtResource("2_w7jl5")
-region = Rect2(16, 0, 16, 16)
+region = Rect2(24, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_d8oix"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8cu3n"]
 atlas = ExtResource("2_w7jl5")
-region = Rect2(48, 0, 16, 16)
+region = Rect2(72, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7nipr"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_c8cfh")
+"texture": SubResource("AtlasTexture_3sqpa")
 }],
 "loop": true,
 "name": &"idle",
@@ -43,31 +43,31 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_teyrj")
+"texture": SubResource("AtlasTexture_vai05")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bbavu")
+"texture": SubResource("AtlasTexture_i2kn3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_d8oix")
+"texture": SubResource("AtlasTexture_8cu3n")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bbavu")
+"texture": SubResource("AtlasTexture_i2kn3")
 }],
 "loop": true,
 "name": &"walk",
 "speed": 10.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_evtx1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_nljhe"]
 atlas = ExtResource("2_w7jl5")
-region = Rect2(0, 0, 16, 16)
+region = Rect2(0, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_x4c8l"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_evtx1")
+"texture": SubResource("AtlasTexture_nljhe")
 }],
 "loop": true,
 "name": &"idle",
@@ -75,10 +75,10 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1iptq"]
-radius = 7.0
+radius = 11.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yo46u"]
-radius = 7.0
+radius = 11.0
 
 [node name="Grunt" type="CharacterBody2D" node_paths=PackedStringArray("animations_move", "animations_shoot", "health_component", "hurt_box_component", "enemy_state_manager", "enemy_shooting_component")]
 collision_layer = 256
@@ -103,7 +103,7 @@ sprite_frames = SubResource("SpriteFrames_x4c8l")
 animation = &"idle"
 
 [node name="ShootOriginPoint1" type="Node2D" parent="AnimationsShoot"]
-position = Vector2(7, 3)
+position = Vector2(11, 5)
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("2_joe5i")
@@ -122,12 +122,12 @@ shape = SubResource("CircleShape2D_1iptq")
 starting_state = NodePath("MoveTowardPlayerState")
 
 [node name="MoveTowardPlayerState" parent="EnemyStateManager" node_paths=PackedStringArray("after_move_state") instance=ExtResource("6_5yyw5")]
-min_length_to_player = 150.0
+min_length_to_player = 300.0
 after_move_state = NodePath("../StationaryState")
 animation_move_name = "walk"
 
 [node name="StationaryState" parent="EnemyStateManager" node_paths=PackedStringArray("after_stationary_state") instance=ExtResource("7_xc0kb")]
-max_length_to_player = 300.0
+max_length_to_player = 500.0
 after_stationary_state = NodePath("../MoveTowardPlayerState")
 can_shoot1 = true
 
